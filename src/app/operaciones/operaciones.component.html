@@ -1,0 +1,84 @@
+<div style="text-align: center; ">
+    <h2>APPCOVID</h2>
+    <button type="button" class="btn btn-success" (click)="open(content)">Alta</button>
+
+<table class= "table">
+    <thead>
+        <tr>
+            <th>ID_USUARIO</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO_PATERNO</th>
+            <th>APELLIDO_MATERNO</th>
+            <th>MATRICULA</th>
+            <th>ID_NOTIFICACION</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of collection.data | paginate: config">
+<td>{{item.id}}</td>
+<td>{{item.nombre}}</td>
+<td>{{item.apellidop}}</td>
+<td>{{item.apellidom}}</td>
+<td>{{item.matricula}}</td>
+<td>{{item.idnoti}}</td>
+<td>
+  <button type="button" class="btn btn-primary" (click)="openEditar(content,item)">Editar</button>
+    <button type="button" class="btn btn-danger" (click)="eliminar(item)" >Eliminar</button>
+  </td>
+        </tr>
+    </tbody>
+
+</table>
+<pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Cliente create/update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+
+          <form [formGroup]="clienteForm">
+            <div class="form-group">
+              <label>ID</label>
+              <input type="number" formControlName="id"class="form-control">
+            </div>
+            <div class="form-group">
+              <label>NOMBRE</label>
+              <input type="texto" formControlName="nombre"class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>APELLIDO_PATERNO</label>
+              <input type="texto" formControlName="apellidop" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>APELLIDO_MATERNO</label>
+              <input type="texto" formControlName="apellidom" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>MATRICULA</label>
+              <input type="number" formControlName="matricula" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>ID_NOTIFICACION</label>
+              <input type="number" formControlName="idnoti" class="form-control">
+            </div>
+          </form>
+        </div>
+      </form>
+    </div>
+    <div  class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardarCliente()" *ngIf="!actualizar">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="actualizarCliente()" *ngIf="actualizar">Actualizar</button>
+    </div>
+
+  </ng-template>
+
+
+</div>
