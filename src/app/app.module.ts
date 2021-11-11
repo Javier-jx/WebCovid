@@ -12,6 +12,9 @@ import { OperacionesComponent } from './operaciones/operaciones.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SintomasComponent } from './sintomas/sintomas.component';
+import { CarreraComponent } from './carrera/carrera.component';
+import { NotiComponent } from './noti/noti.component';
+
 
 
 @NgModule({
@@ -20,6 +23,9 @@ import { SintomasComponent } from './sintomas/sintomas.component';
     NavbarComponent,
     OperacionesComponent,
     SintomasComponent,
+    CarreraComponent,
+    NotiComponent,
+
 
 
 

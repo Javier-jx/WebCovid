@@ -12,20 +12,20 @@ export class FirebaseServiceService {
   ) { }
 
   // tslint:disable-next-line:typedef
-  getClientes(){
-    return this.firestore.collection('clientes').snapshotChanges();
+  getSintomas(){
+    return this.firestore.collection('sintoma').snapshotChanges();
       }
       // tslint:disable-next-line:typedef
-      createCliente(cliente: any){
-        return this.firestore.collection('clientes').add(cliente);
+      createSintoma(sintoma: any){
+        return this.firestore.collection('sintoma').add(sintoma);
       }
       // tslint:disable-next-line:typedef
-      updateCliente(id: any, cliente: any){
-        return  this.firestore.collection('clientes').doc(id).update(cliente);
+      updateSintoma(id: any, sintoma: any){
+        return  this.firestore.collection('sintoma').doc(id).update(sintoma);
       }
       // tslint:disable-next-line:typedef
-      deleteCliente(id: any){
-        return  this.firestore.collection('clientes').doc(id).delete();
+      deleteSintoma(id: any){
+        return  this.firestore.collection('sintoma').doc(id).delete();
       }
   }
 

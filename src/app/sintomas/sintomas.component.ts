@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseServiceService } from '../auth/services/firebase-service.service';
+import { FirebaseServiceService } from '../auth/services/firebase-service.services';
 import { isNullOrUndefined } from 'util';
 
 
@@ -45,16 +45,16 @@ export class SintomasComponent implements OnInit {
 
     this.sintomaForm = this.fb.group({
       id: ['', Validators.required],
-      idqr: ['', Validators.required],
-      idsintomas: ['', Validators.required],
+      pregunta: ['', Validators.required],
     });
 
-    this.firebaseServiceService.getClientes().subscribe(resp => {
+    this.firebaseServiceService.getSintomas().subscribe(resp => {
       this.collection.data = resp.map((e: any) => {
         return {
           id: e.payload.doc.data().id,
-          idqr: e.payload.doc.data().idqr,
-          idsintomas: e.payload.doc.data().idsintomas,
+          pregunta: e.payload.doc.data().pregunta,
+
+
           idFirebase: e.payload.doc.id
         };
       });
@@ -71,12 +71,12 @@ export class SintomasComponent implements OnInit {
     this.config.currentPage = event;
   }
 
-  eliminarSintoma(item: any): void {
-    this.firebaseServiceService.deleteCliente(item.idFirebase);
+  eliminar(item: any): void {
+    this.firebaseServiceService.deleteSintoma(item.idFirebase);
   }
 
   guardarSintoma(): void {
-    this.firebaseServiceService.createCliente(this.sintomaForm.value).then(resp => {
+    this.firebaseServiceService.createSintoma(this.sintomaForm.value).then(resp => {
       this.sintomaForm.reset();
       this.modalService.dismissAll();
     }).catch(error => {
@@ -87,7 +87,7 @@ export class SintomasComponent implements OnInit {
   // tslint:disable-next-line:typedef
   actualizarSintoma() {
     if (!isNullOrUndefined(this.idFirabaseActualizar)){
-      this.firebaseServiceService.updateCliente(this.idFirabaseActualizar, this.sintomaForm.value).then(resp => {
+      this.firebaseServiceService.updateSintoma(this.idFirabaseActualizar, this.sintomaForm.value).then(resp => {
         this.sintomaForm.reset();
         this.modalService.dismissAll();
       }).catch(error => {
@@ -101,8 +101,7 @@ export class SintomasComponent implements OnInit {
   openEditar(content, item: any) {
     this.sintomaForm.setValue({
       id: item.id,
-      idqr: item.idqr,
-      idsintomas: item.idsintomas,
+      pregunta: item.pregunta,
     });
     this.idFirabaseActualizar = item.idFirebase;
     this.actualizar = true;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseServiceService } from '../auth/services/firebase-service.service';
+import { FirebaseServiceService } from '../auth/services/firebase-service.services2';
 import { isNullOrUndefined } from 'util';
 
 
@@ -9,15 +9,15 @@ import { isNullOrUndefined } from 'util';
 
 
 @Component({
-  selector: 'app-operaciones',
-  templateUrl: './operaciones.component.html',
-  styleUrls: ['./operaciones.component.css'],
+  selector: 'app-noti',
+  templateUrl: './noti.component.html',
+  styleUrls: ['./noti.component.css'],
 })
-export class OperacionesComponent implements OnInit {
+export class NotiComponent implements OnInit {
 
   closeResult = '';
 
-  clienteForm: FormGroup;
+  notiForm: FormGroup;
 
   idFirabaseActualizar: string;
   actualizar: boolean;
@@ -43,24 +43,19 @@ export class OperacionesComponent implements OnInit {
       totalItems: this.collection.data.length
     };
 
-    this.clienteForm = this.fb.group({
+    this.notiForm = this.fb.group({
       id: ['', Validators.required],
-      nombre: ['', Validators.required],
-      apellidop: ['', Validators.required],
-      apellidom: ['', Validators.required],
-      matricula: ['', Validators.required],
-      idnoti: ['', Validators.required],
+      idqr: ['', Validators.required],
+      idsintomas: ['', Validators.required],
     });
 
-    this.firebaseServiceService.getClientes().subscribe(resp => {
+    this.firebaseServiceService.getNotificaciones().subscribe(resp => {
       this.collection.data = resp.map((e: any) => {
         return {
           id: e.payload.doc.data().id,
-          nombre: e.payload.doc.data().nombre,
-          apellidop: e.payload.doc.data().apellidop,
-          apellidom: e.payload.doc.data().apellidom,
-          matricula: e.payload.doc.data().matricula,
-          idnoti: e.payload.doc.data().idnoti,
+          idqr: e.payload.doc.data().idqr,
+          idsintomas: e.payload.doc.data().idsintomas,
+
 
           idFirebase: e.payload.doc.id
         };
@@ -79,12 +74,12 @@ export class OperacionesComponent implements OnInit {
   }
 
   eliminar(item: any): void {
-    this.firebaseServiceService.deleteCliente(item.idFirebase);
+    this.firebaseServiceService.deleteNoti(item.idFirebase);
   }
 
-  guardarCliente(): void {
-    this.firebaseServiceService.createCliente(this.clienteForm.value).then(() => {
-      this.clienteForm.reset();
+  guardarNoti(): void {
+    this.firebaseServiceService.createNoti(this.notiForm.value).then(resp => {
+      this.notiForm.reset();
       this.modalService.dismissAll();
     }).catch(error => {
       console.error(error);
@@ -92,10 +87,10 @@ export class OperacionesComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  actualizarCliente() {
+  actualizarNoti() {
     if (!isNullOrUndefined(this.idFirabaseActualizar)){
-      this.firebaseServiceService.updateCliente(this.idFirabaseActualizar, this.clienteForm.value).then(() => {
-        this.clienteForm.reset();
+      this.firebaseServiceService.updateNoti(this.idFirabaseActualizar, this.notiForm.value).then(resp => {
+        this.notiForm.reset();
         this.modalService.dismissAll();
       }).catch(error => {
         console.error(error);
@@ -106,13 +101,10 @@ export class OperacionesComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   openEditar(content, item: any) {
-    this.clienteForm.setValue({
+    this.notiForm.setValue({
       id: item.id,
-      nombre: item.nombre,
-      apellidop: item.apellidop,
-      apellidom: item.apellidom,
-      matricula: item.matricula,
-      idnoti: item.idnoti,
+      idqr: item.idqr,
+      idsintomas: item.idsintomas,
     });
     this.idFirabaseActualizar = item.idFirebase;
     this.actualizar = true;

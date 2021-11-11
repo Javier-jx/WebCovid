@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OperacionesComponent } from './operaciones/operaciones.component';
 import { SintomasComponent } from './sintomas/sintomas.component';
+import { CarreraComponent } from './carrera/carrera.component';
+import { NotiComponent } from './noti/noti.component';
+
 
 const routes: Routes = [
   { path: '',
@@ -13,6 +16,8 @@ pathMatch: 'full',
    { path: 'register', loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterModule)},
    { path: 'operaciones', component: OperacionesComponent},
    { path: 'sintomas', component: SintomasComponent},
+   { path: 'carrera', component: CarreraComponent},
+   { path: 'noti', component: NotiComponent},
 
   ];
 

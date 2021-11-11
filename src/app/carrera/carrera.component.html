@@ -6,7 +6,9 @@
   <thead>
       <tr>
           <th>ID</th>
-          <th>PREGUNTA</th>
+          <th>NOMBRE</th>
+          <th>EDIFICIO</th>
+          <th>SALON</th>
 
 
       </tr>
@@ -15,7 +17,9 @@
   <tbody>
       <tr *ngFor="let item of collection.data | paginate: config">
 <td>{{item.id}}</td>
-<td>{{item.pregunta}}</td>
+<td>{{item.nombre}}</td>
+<td>{{item.edificio}}</td>
+<td>{{item.salon}}</td>
 
 <td>
 <button type="button" class="btn btn-primary" (click)="openEditar(content,item)">Editar</button>
@@ -29,7 +33,7 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Sintoma create/update</h4>
+    <h4 class="modal-title" id="modal-basic-title">Carrera create/update</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -38,14 +42,22 @@
     <form>
       <div class="form-group">
 
-        <form [formGroup]="sintomaForm">
+        <form [formGroup]="carreraForm">
           <div class="form-group">
             <label>ID</label>
             <input type="number" formControlName="id"class="form-control">
           </div>
           <div class="form-group">
-            <label>PREGUNTA</label>
-            <input type="texto" formControlName="pregunta"class="form-control" >
+            <label>NOMBRE</label>
+            <input type="texto" formControlName="nombre"class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>EDIFICIO</label>
+            <input type="texto" formControlName="edificio"class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>SALON</label>
+            <input type="texto" formControlName="salon"class="form-control" >
           </div>
 
         </form>
@@ -53,11 +65,12 @@
     </form>
   </div>
   <div  class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="guardarSintoma()" *ngIf="!actualizar">Save</button>
-      <button type="button" class="btn btn-outline-dark" (click)="actualizarSintoma()" *ngIf="actualizar">Actualizar</button>
+      <button type="button" class="btn btn-outline-dark" (click)="guardarCarrera()" *ngIf="!actualizar">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="actualizarCarrera()" *ngIf="actualizar">Actualizar</button>
   </div>
 
 </ng-template>
 
 
 </div>
+

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseServiceService } from '../auth/services/firebase-service.service';
+import { FirebaseServiceService } from '../auth/services/firebase-service.services1';
 import { isNullOrUndefined } from 'util';
 
 
@@ -9,15 +9,15 @@ import { isNullOrUndefined } from 'util';
 
 
 @Component({
-  selector: 'app-operaciones',
-  templateUrl: './operaciones.component.html',
-  styleUrls: ['./operaciones.component.css'],
+  selector: 'app-carrera',
+  templateUrl: './carrera.component.html',
+  styleUrls: ['./carrera.component.css'],
 })
-export class OperacionesComponent implements OnInit {
+export class CarreraComponent implements OnInit {
 
   closeResult = '';
 
-  clienteForm: FormGroup;
+  carreraForm: FormGroup;
 
   idFirabaseActualizar: string;
   actualizar: boolean;
@@ -43,24 +43,21 @@ export class OperacionesComponent implements OnInit {
       totalItems: this.collection.data.length
     };
 
-    this.clienteForm = this.fb.group({
+    this.carreraForm = this.fb.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
-      apellidop: ['', Validators.required],
-      apellidom: ['', Validators.required],
-      matricula: ['', Validators.required],
-      idnoti: ['', Validators.required],
+      edificio: ['', Validators.required],
+      salon: ['', Validators.required],
     });
 
-    this.firebaseServiceService.getClientes().subscribe(resp => {
+    this.firebaseServiceService.getCarreras().subscribe(resp => {
       this.collection.data = resp.map((e: any) => {
         return {
           id: e.payload.doc.data().id,
           nombre: e.payload.doc.data().nombre,
-          apellidop: e.payload.doc.data().apellidop,
-          apellidom: e.payload.doc.data().apellidom,
-          matricula: e.payload.doc.data().matricula,
-          idnoti: e.payload.doc.data().idnoti,
+          edificio: e.payload.doc.data().edificio,
+          salon: e.payload.doc.data().salon,
+
 
           idFirebase: e.payload.doc.id
         };
@@ -79,12 +76,12 @@ export class OperacionesComponent implements OnInit {
   }
 
   eliminar(item: any): void {
-    this.firebaseServiceService.deleteCliente(item.idFirebase);
+    this.firebaseServiceService.deleteCarrera(item.idFirebase);
   }
 
-  guardarCliente(): void {
-    this.firebaseServiceService.createCliente(this.clienteForm.value).then(() => {
-      this.clienteForm.reset();
+  guardarCarrera(): void {
+    this.firebaseServiceService.createCarrera(this.carreraForm.value).then(resp => {
+      this.carreraForm.reset();
       this.modalService.dismissAll();
     }).catch(error => {
       console.error(error);
@@ -92,10 +89,10 @@ export class OperacionesComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  actualizarCliente() {
+  actualizarCarrera() {
     if (!isNullOrUndefined(this.idFirabaseActualizar)){
-      this.firebaseServiceService.updateCliente(this.idFirabaseActualizar, this.clienteForm.value).then(() => {
-        this.clienteForm.reset();
+      this.firebaseServiceService.updateCarrera(this.idFirabaseActualizar, this.carreraForm.value).then(resp => {
+        this.carreraForm.reset();
         this.modalService.dismissAll();
       }).catch(error => {
         console.error(error);
@@ -106,13 +103,11 @@ export class OperacionesComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   openEditar(content, item: any) {
-    this.clienteForm.setValue({
+    this.carreraForm.setValue({
       id: item.id,
       nombre: item.nombre,
-      apellidop: item.apellidop,
-      apellidom: item.apellidom,
-      matricula: item.matricula,
-      idnoti: item.idnoti,
+      edificio: item.edificio,
+      salon: item.salon,
     });
     this.idFirabaseActualizar = item.idFirebase;
     this.actualizar = true;

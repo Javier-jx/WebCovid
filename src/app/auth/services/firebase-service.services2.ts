@@ -12,20 +12,19 @@ export class FirebaseServiceService {
   ) { }
 
   // tslint:disable-next-line:typedef
-  getClientes(){
-    return this.firestore.collection('clientes').snapshotChanges();
+  getNotificaciones(){
+    return this.firestore.collection('notificacion').snapshotChanges();
       }
       // tslint:disable-next-line:typedef
-      createCliente(cliente: any){
-        return this.firestore.collection('clientes').add(cliente);
+      createNoti(notificacion: any){
+        return this.firestore.collection('notificacion').add(notificacion);
       }
       // tslint:disable-next-line:typedef
-      updateCliente(id: any, cliente: any){
-        return  this.firestore.collection('clientes').doc(id).update(cliente);
+      updateNoti(id: any, notificacion: any){
+        return  this.firestore.collection('notificacion').doc(id).update(notificacion);
       }
       // tslint:disable-next-line:typedef
-      deleteCliente(id: any){
-        return  this.firestore.collection('clientes').doc(id).delete();
+      deleteNoti(id: any){
+        return  this.firestore.collection('notificacion').doc(id).delete();
       }
   }
-
